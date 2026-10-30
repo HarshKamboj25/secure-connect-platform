@@ -85,29 +85,36 @@ Screenshots are intentionally limited to representative successful requests and 
 
 ### 1. Create a note · `201 Created`
 
-![Create note request and response](screenshots/note-create.jpg)
+![Create note request and response](<img width="1103" height="870" alt="image" src="https://github.com/user-attachments/assets/a3bd7d3e-d0b7-41ed-90d1-d7674503704e" />
+)
 
 ### 2. Update a note · `200 OK`
 
-![Update note request and response](screenshots/note-update.jpg)
+![Update note request and response](<img width="1116" height="868" alt="image" src="https://github.com/user-attachments/assets/907710f6-2653-4d08-93b8-0cdcd4d77606" />
+)
 
 ### 3. Delete a note · `200 OK`
 
-![Delete note request and response](screenshots/note-delete.jpg)
+![Delete note request and response](<img width="1127" height="798" alt="image" src="https://github.com/user-attachments/assets/ff1f413b-31e5-4fa1-bfb5-bbb12ae30edf" />
+)
 
 ### 4. Real-time note notification
 
-![Socket.IO note-created event](screenshots/socket-note-created.jpg)
+![Socket.IO note-created event](<img width="1105" height="821" alt="image" src="https://github.com/user-attachments/assets/013dfbbd-d612-499c-ad4c-6a5b567fb1b8" />
+)
 
 ### 5. Join a room and send a chat message
 
-![Socket.IO room join](screenshots/socket-room-join.jpg)
+![Socket.IO room join](<img width="1112" height="933" alt="image" src="https://github.com/user-attachments/assets/624d95ae-e8dc-4fb1-9a64-ad581b48c290" />
+)
 
-![Socket.IO chat message](screenshots/socket-chat-message.jpg)
+![Socket.IO chat message](<img width="1107" height="992" alt="image" src="https://github.com/user-attachments/assets/c5fa2e92-6c3f-4f55-9c2a-95aaac38fe8f" />
+)
 
 ### Server-side event logs
 
-![Server logs showing note and chat events](screenshots/server-events.jpg)
+![Server logs showing note and chat events](<img width="1347" height="288" alt="image" src="https://github.com/user-attachments/assets/7c3a2af4-5eaf-44c1-b0ed-d77cb5115bb3" />
+)
 
 ## 🚀 Run Locally
 
