@@ -1,95 +1,156 @@
-# Secure Connect and Communication Platform
+<div align="center">
 
-Starter project for **Web Dev III, Lab 4**. It is a backend application, not a frontend website. The assignment's expected evidence is API testing (for example, Postman) and real-time chat activity in the server terminal.
+# 🔐 Secure Connect Platform
 
-## Requirements covered in this project
+### Secure Notes API • Real-Time Notifications • Room-Based Chat
 
-- Signup and login with bcrypt password hashing
-- JWT token generation and verification
-- Protected API routes
-- Notes CRUD scoped to the authenticated user
-- Basic role-based access control (RBAC): signup users default to `user`; an `admin` role can access the admin route
-- Real-time chat using Socket.IO
-- Node.js EventEmitter events for signup, login, note creation and chat messages
-- Environment variables using dotenv
+A backend-focused application demonstrating authenticated note management and real-time communication with **Socket.IO**.
 
-## 1. Open the project
+![Node.js](https://img.shields.io/badge/Node.js-Backend-339933?logo=nodedotjs&logoColor=white)
+![Express](https://img.shields.io/badge/Express.js-API-000000?logo=express&logoColor=white)
+![Socket.IO](https://img.shields.io/badge/Socket.IO-Realtime-010101?logo=socketdotio&logoColor=white)
+![API Testing](https://img.shields.io/badge/API%20Testing-Postman-FF6C37?logo=postman&logoColor=white)
 
-1. Extract the ZIP.
-2. Open the `secure-connect-platform` folder in VS Code.
-3. Ensure Node.js and npm are installed.
-4. Copy `.env.example` to a new file named `.env`.
-5. Change `JWT_SECRET` to a long random secret.
+</div>
 
-## 2. Database setup
+---
 
-This project uses the official MongoDB Node.js driver. Start a local MongoDB server, or use a MongoDB Atlas connection string.
+## 📌 Overview
 
-Set `MONGODB_URI` in `.env`:
-- Local: `mongodb://127.0.0.1:27017`
-- Atlas: paste your connection string, keeping credentials private.
+**Secure Connect Platform** is a backend project that brings together REST API operations for notes and real-time communication through Socket.IO. The tested flows shown in this repository cover creating, retrieving, updating, and deleting notes, receiving a note-created event, joining a chat room, and sending chat messages.
 
-Set `DB_NAME=secure_connect_platform`.
+## ✨ Features
 
-## 3. Install and run
+- 🔑 **Token-based authorization** for protected note requests using a Bearer Token.
+- 📝 **Create notes** with a title and content.
+- 📚 **Retrieve notes** through the notes API.
+- ✏️ **Update notes** by note ID.
+- 🗑️ **Delete notes** by note ID.
+- ⚡ **Real-time note notifications** using the `note:created` Socket.IO event.
+- 💬 **Room-based real-time chat** using `join_room` and `chat_message` events.
+- 🧪 **API and socket testing** demonstrated using Postman.
 
-In the VS Code terminal, from this folder:
+## 🧰 Tech Stack
 
-```bash
-npm install
-npm run dev
-```
+| Technology | Purpose |
+|---|---|
+| Node.js | JavaScript runtime for the backend |
+| Express.js | HTTP API and route handling |
+| MongoDB | Persistent note data (as reflected by the returned document fields) |
+| Socket.IO | Real-time events and chat communication |
+| bcryptjs | Password-hashing dependency visible in the development environment |
+| Postman | REST API and Socket.IO testing |
 
-Or use `npm start`.
+> The table reflects technologies visible in the provided project screenshots. Add any other libraries only if they are present in the project’s `package.json`.
 
-The server should report that it is listening on the configured port after it connects to MongoDB.
+## 🏗️ API Overview
 
-## 4. Test in Postman
+Base URL used during local testing: `http://localhost:5000`
 
-Base URL: `http://localhost:5000`
+| Method | Endpoint | Purpose |
+|---|---|---|
+| `GET` | `/api/notes` | Retrieve notes available to the authenticated user |
+| `POST` | `/api/notes` | Create a note |
+| `PUT` | `/api/notes/:id` | Update a note by its ID |
+| `DELETE` | `/api/notes/:id` | Delete a note by its ID |
 
-### Signup
-`POST /api/auth/signup`
+### Example request body
+
 ```json
 {
-  "username": "victor",
-  "email": "victor@example.com",
-  "password": "StrongPassword123"
+  "title": "My Note",
+  "content": "Note content goes here."
 }
 ```
 
-### Login
-`POST /api/auth/login`
-```json
-{
-  "email": "victor@example.com",
-  "password": "StrongPassword123"
-}
-```
-Copy the returned `token`.
+### Authorization
 
-For protected requests, add this header:
-`Authorization: Bearer YOUR_TOKEN_HERE`
+For protected API requests, select **Bearer Token** in Postman’s Authorization tab and provide a valid token. Keep tokens and secrets private; never commit real credentials to GitHub.
 
-### Notes API
-- `GET /api/notes` - list your notes
-- `POST /api/notes` - create a note with `{"title":"My First Note","content":"Hello"}`
-- `GET /api/notes/:id` - read one of your notes
-- `PUT /api/notes/:id` - update one of your notes
-- `DELETE /api/notes/:id` - delete one of your notes
+## ⚡ Socket.IO Events
 
-### Protected route and RBAC
-- `GET /api/protected` - requires a valid JWT
-- `GET /api/admin` - requires a valid JWT and `admin` role
+The following events are demonstrated in the supplied tests:
 
-For safety, public signup always assigns the `user` role. To test admin-only access in a lab database, update that user's `role` field to `admin` in MongoDB, then log in again to receive a token containing the updated role.
+| Event | Direction / purpose | Example payload |
+|---|---|---|
+| `note:created` | Server notification when a note is created | `{ "userId": "…", "title": "Live Notification Test" }` |
+| `join_room` | Client requests to join a chat room | `{ "room": "general" }` |
+| `chat_message` | Client sends a room message | `{ "room": "general", "username": "Harsh", "message": "Hello!" }` |
 
-### Real-time chat
-Use a Socket.IO client (or a small local test page/client) to connect to `http://localhost:5000`. Emit `join_room` with `{ "room": "general" }`, then emit `chat_message` with `{ "room": "general", "username": "victor", "message": "Hello!" }`. The server logs connections and messages. This starter logs the provided username for classroom demonstration; production chat should derive identity from a verified socket token.
+The exact payloads and event names should match the server implementation. The examples above are based on the successful Postman tests shown below.
 
-## Important notes
+## 🖼️ Test Evidence
 
-- No frontend UI is required by the assignment PDF.
-- Do not commit `.env` or real credentials to GitHub.
-- This is a learning/lab implementation, not production-hardened authentication.
-- Before submission, test every endpoint and capture evidence of successful signup/login, unauthorized access being blocked, notes CRUD, and Socket.IO messages.
+Screenshots are intentionally limited to representative successful requests and events, rather than every repeated test.
+
+### 1. Create a note · `201 Created`
+
+![Create note request and response](screenshots/note-create.jpg)
+
+### 2. Update a note · `200 OK`
+
+![Update note request and response](screenshots/note-update.jpg)
+
+### 3. Delete a note · `200 OK`
+
+![Delete note request and response](screenshots/note-delete.jpg)
+
+### 4. Real-time note notification
+
+![Socket.IO note-created event](screenshots/socket-note-created.jpg)
+
+### 5. Join a room and send a chat message
+
+![Socket.IO room join](screenshots/socket-room-join.jpg)
+
+![Socket.IO chat message](screenshots/socket-chat-message.jpg)
+
+### Server-side event logs
+
+![Server logs showing note and chat events](screenshots/server-events.jpg)
+
+## 🚀 Run Locally
+
+1. **Clone the repository.**
+
+   ```bash
+   git clone <your-repository-url>
+   cd <repository-folder>
+   ```
+
+2. **Install dependencies.**
+
+   ```bash
+   npm install
+   ```
+
+3. **Configure environment variables.** Create a `.env` file and add the variables required by your project, such as your MongoDB connection string and authentication secret. Use the exact variable names expected by your source code. Do not commit `.env`.
+
+4. **Start the server** using the script defined in `package.json`. For example, if your project has a `dev` script:
+
+   ```bash
+   npm run dev
+   ```
+
+   The supplied terminal screenshot shows the server listening at `http://localhost:5000`.
+
+5. **Test the endpoints and socket events** in Postman using the endpoint table and event names above. Keep the Socket.IO connection open while testing real-time events.
+
+## 🔒 Security Notes
+
+- Store secrets and database credentials in environment variables.
+- Do not share or commit Bearer Tokens.
+- Validate request bodies and authorize users before reading or modifying their notes.
+- Ensure users can access only the data permitted by the application’s authorization logic.
+
+## ✅ Verification Summary
+
+The supplied screenshots show successful responses for note creation (`201 Created`), note update (`200 OK`), note deletion (`200 OK`), a `note:created` notification, room joining, and chat message events. The notes list screenshot returned an empty array at that moment, so it is not included as a showcase image.
+
+---
+
+<div align="center">
+
+**Built to practise secure API workflows and real-time communication.** ⚡
+
+</div>
