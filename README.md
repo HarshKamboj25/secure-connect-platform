@@ -444,5 +444,6 @@ Through this project, the following backend development concepts were practised:
 <br/><br/>
 
 **Thanks for exploring Secure Connect Platform!** 💙
+<img src="https://capsule-render.vercel.app/api?type=waving&color=0:36BCF7,100:4776E6&height=100&section=footer" width="100%"/>
 
 </div>
